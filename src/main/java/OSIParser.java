@@ -3,7 +3,7 @@ public class OSIParser {
         byte[] verbBytes = new byte[4];
         System.in.read(verbBytes);
         String verb = new String(verbBytes);
-        System.out.println("Verb: '" + verb + "'");
+        System.out.printf("Verb: '%s'", verb);
 
         StringBuilder tagBuilder = new StringBuilder();
 
@@ -13,18 +13,18 @@ public class OSIParser {
             if (current[0] == 0x00) {
                 break;
             }
-            tagBuilder.append(new String(current));
+            tagBuilder.append(current);
 
             last = System.in.read(current);
         }
 
-        System.out.println("Tags: '" + tagBuilder + "'");
+        System.out.printf("Tags: '%s'", tagBuilder);
 
         for (int i = 0; i < tagBuilder.length(); i++) {
             char tag = tagBuilder.charAt(i);
             if (tag == 'i') {
                 System.in.read(current);
-                System.out.println("Attribute " + i + " (int32): " + current[0]);
+                System.out.printf("Attribute %d (int32): %s", i, current[0]);
             } else if (tag == 's') {
                 StringBuilder attributeBuilder = new StringBuilder();
                 current = new byte[1];
@@ -33,11 +33,11 @@ public class OSIParser {
                     if (current[0] == 0x00) {
                         break;
                     }
-                    attributeBuilder.append(new String(current));
+                    attributeBuilder.append(current);
 
                     last = System.in.read(current);
                 }
-                System.out.println("Attribute " + i + " (string): " + attributeBuilder);
+                System.out.printf("Attribute %d (int32): %s", i, attributeBuilder);
             }
         }
     }

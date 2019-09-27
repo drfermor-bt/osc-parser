@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 import java.util.logging.Logger;
 
-public class OSIParser {
+public class OSCParser {
     public static void main(String[] args) throws java.io.IOException {
         Logger log = Logger.getLogger("Main");
 

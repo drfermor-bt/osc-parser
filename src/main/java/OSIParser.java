@@ -1,8 +1,10 @@
 import java.util.ArrayList;
-import java.util.Vector;
+import java.util.logging.Logger;
 
 public class OSIParser {
     public static void main(String[] args) throws java.io.IOException {
+        Logger log = Logger.getLogger("Main");
+
         int verbSize = 4;
 
         // Verb
@@ -13,7 +15,7 @@ public class OSIParser {
             byte b = verbBytes[i];
             verbBuilder.append((char) b);
         }
-        System.out.printf("Verb: '%s'\n", verbBuilder);
+        log.info("Verb: " + verbBuilder);
 
         // Tags
         ArrayList<Integer> parseInstructions = new ArrayList<Integer>();
@@ -29,13 +31,13 @@ public class OSIParser {
         }
 
         // Payload
-        System.out.printf("Tags: %s\n", parseInstructions);
+        log.info("Tags: " + parseInstructions);
         int tag;
         for (int i = 0; i < parseInstructions.size(); i++) {
             tag = parseInstructions.get(i);
             if (tag == 105) {
                 System.in.read(current);
-                System.out.printf("Attribute %d (int32): %s\n", i, current[0]);
+                log.info("Attribute " + i + " (int32): " + current[0]);
             } else if (tag == 115) {
                 StringBuilder attributeBuilder = new StringBuilder();
                 current = new byte[1];
@@ -48,7 +50,7 @@ public class OSIParser {
 
                     last = System.in.read(current);
                 }
-                System.out.printf("Attribute %d (string): %s\n", i, attributeBuilder);
+                log.info("Attribute " + i + " (int32): " + attributeBuilder);
             }
         }
     }
